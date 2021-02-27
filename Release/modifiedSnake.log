@@ -1,138 +1,86 @@
 ﻿  main.cpp
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(82,72): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(160,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(163,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(176,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(339,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(448,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-          and
-          [
-              T=float
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(82,43): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(85,38): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(87,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(87,44): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(454,97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(454,59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(459,97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(459,59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(464,97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(464,59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(474,63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(480,96): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(480,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-          and
-          [
-              T=float
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(90,41): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(499,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(93,44): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(510,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(510,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(519,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(519,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(528,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(528,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(538,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(544,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(544,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-          and
-          [
-              T=float
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(99,47): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(583,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-          and
-          [
-              T=float
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(106,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(109,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(122,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(157,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(266,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(590,103): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(272,97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(272,59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(277,97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(277,59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(282,97): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(282,59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(292,63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(298,96): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(298,59): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(590,54): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(615,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(615,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(317,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(654,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(328,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(328,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(337,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(337,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(346,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(346,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(356,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(362,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(362,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(665,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(665,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(674,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(674,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(683,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(683,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(689,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(689,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=unsigned int
           ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(384,1): warning C4552: '+': result of expression not used
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(401,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(408,103): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(408,54): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(433,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(433,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(472,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(483,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(483,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(492,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(492,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(501,91): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(501,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(507,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\TENK\Desktop\modifiedSnake\main.cpp(507,53): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
-          with
-          [
-              T=unsigned int
-          ]
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(700,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(700,52): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(792,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(800,90): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(800,52): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Generating code
-  2 of 300 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB not found, fall back to full compilation.
+C:\Users\TENK\Desktop\modifiedSnake\main.cpp(82): warning C4715: 'snake::setTile': not all control paths return a value
+  All 328 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   modifiedSnake.vcxproj -> C:\Users\TENK\Desktop\modifiedSnake\Release\modifiedSnake.exe

@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <fstream>
 #include <vector>
-#include <cassert>
+#include <algorithm>
 
 #ifndef NDEBUG
 	#include <iostream>
@@ -12,6 +12,28 @@
 struct Records {
 	std::string nickname;
 	int score = 0;
+	friend bool operator>(Records &a, Records &b) {
+		if (a.score > b.score) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	friend bool operator<(Records& a, Records& b) {
+		if (a.score < b.score) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	Records& operator= (const Records& a)
+	{
+		nickname = a.nickname;
+		score = a.score;
+		return *this;
+	}
 };
 
 namespace snake {
@@ -80,9 +102,11 @@ namespace snake {
 		sf::Texture tileTexture;
 		sf::Sprite tileSprite;
 		sf::Vector2f tileSize;
+		bool finished = false;
 		//snake
 		Node* headOfSnake;
 		int sizeOfSnake;
+		//movement
 		/*
 	   * Up-arrow => return 1
 	   * Right-arrow => return 2
@@ -132,8 +156,6 @@ namespace snake {
 			spawnFood();
 		}
 		void showGF() {
-			window->clear(sf::Color::Black);
-
 			int i = 0; //for even rows
 			for (float positionY = borderThickness; positionY < borderThickness + tileSize.y * sizeGF - 1; positionY += tileSize.y, i++) {
 				if (i % 2 == 0) {
@@ -192,8 +214,6 @@ namespace snake {
 					}
 				}
 			}
-			
-			window->display();
 		}
 
 		void clearGF() {
@@ -204,7 +224,7 @@ namespace snake {
 
 		void spawnFood() {
 			int counter = 0;
-			Point* ptr = new Point[sizeGF * sizeGF - sizeOfSnake];
+			Point* ptr = new Point[sizeGF * sizeGF - getSizeOfSnake()];
 			for (int i = 0; i < sizeGF; i++) {
 				for (int j = 0; j < sizeGF; j++) {
 					if (*(headOfGF + i * sizeGF + j) != 'o' && *(headOfGF + i * sizeGF + j) != 'O') {
@@ -213,8 +233,19 @@ namespace snake {
 					}
 				}
 			}
-			int randBuff = rand() % (sizeGF * sizeGF - sizeOfSnake);
+			int randBuff = rand() % (sizeGF * sizeGF - getSizeOfSnake());
+			//error
 			*(headOfGF + ptr[randBuff].y * sizeGF + ptr[randBuff].x) = 'X';
+		}
+
+		int getSizeOfSnake() {
+			Node* temp = headOfSnake;
+			int counter = 0;
+			while (temp) {
+				temp = temp->next;
+				counter++;
+			}
+			return counter;
 		}
 
 		void moveSnake() {
@@ -240,9 +271,8 @@ namespace snake {
 			prevMovement = movement;
 			switch (checkBorders(x, y)) {
 				case(0): {
-					showGF();
-					system("pause");
-					exit(0);
+					finished = true;
+					break;
 				}
 				case(1): {
 					*(headOfGF + headOfSnake->y * sizeGF + headOfSnake->x) = 'o';
@@ -256,6 +286,7 @@ namespace snake {
 					headOfSnake->prev = temp;
 					temp->next = headOfSnake; temp->prev = NULL;
 					headOfSnake = temp;
+					break;
 				}
 				case(2): {
 					*(headOfGF + headOfSnake->y * sizeGF + headOfSnake->x) = 'o';
@@ -266,6 +297,7 @@ namespace snake {
 					*(headOfGF + temp->y * sizeGF + temp->x) = 'O';
 					spawnFood();
 					headOfSnake = temp;
+					break;
 				}
 			}
 		}
@@ -279,6 +311,17 @@ namespace snake {
 			}
 			else return 1;
 		}
+
+		//movement
+		void changeMovement(int i) {
+			if (i == 1 && prevMovement != 3 || i == 2 && prevMovement != 4 || i == 3 && prevMovement != 1 || i == 4 && prevMovement != 2) {
+				movement = i;
+			}
+		}
+
+		bool getFinished() {
+			return finished;
+		}
 	};
 }
 
@@ -286,7 +329,9 @@ enum Menu {
 	mainMenu,
 	choosingDifficult,
 	records,
-	game
+	game,
+	preGame,
+	postGame
 };
 
 
@@ -420,10 +465,10 @@ int main(){
 										window.draw(text);
 
 										if (blinkCounter < 250) {
-											text.setString("Your nick " + nickname + " >");
+											text.setString("Your nick: " + nickname + " >");
 										}
 										else {
-											text.setString("Your nick " + nickname);
+											text.setString("Your nick: " + nickname);
 										}
 										text.setOrigin(0, 0);
 										text.setPosition(10, texture_background.getSize().y * 0.9);
@@ -484,10 +529,10 @@ int main(){
 				window.draw(text);
 
 				if (main_menu_position == 4) {
-					text.setString("Your nick " + nickname + " >");
+					text.setString("Your nick: " + nickname + " >");
 				}
 				else {
-					text.setString("Your nick " + nickname);
+					text.setString("Your nick: " + nickname);
 				}
 				text.setOrigin(0, 0);
 				text.setPosition(10, texture_background.getSize().y * 0.9);
@@ -518,7 +563,7 @@ int main(){
 			vector[counter].nickname = string;
 			fin >> string;
 			vector[counter].score = atoi(&string[0]);
-+			counter++;
+			counter++;
 			fin >> string;
 		}
 			while (menu == Menu::records && window.isOpen()) {
@@ -563,7 +608,7 @@ int main(){
 					}
 					window.draw(text);
 				}
-
+				text.setFillColor(sf::Color::White);
 				text.setCharacterSize(20);
 				text.setString("Escape to quit");
 				text.setOrigin(text.getLocalBounds().left * 2 + text.getLocalBounds().width, text.getLocalBounds().top * 2 + text.getLocalBounds().height);
@@ -647,14 +692,37 @@ int main(){
 				window.display();
 			}
 		}
-		else if (menu == Menu::game && window.isOpen()) {
+		else 
+		if (menu == Menu::game && window.isOpen()) {
 			snake::Snake GF(window, difficult + 8, texture_background.getSize(), difficult + 2);
+			text.setString("To move snake use arrows\nPress ENTER to countinue");
+			text.setOrigin(text.getLocalBounds().left + text.getLocalBounds().width / 2, 0);
+			text.setPosition(texture_background.getSize().x * 0.5, texture_background.getSize().y * 0.5);
+			eventTimer.restart();
+			menu = Menu::preGame;
+			while (window.isOpen() && menu == Menu::preGame) {
+				while (window.pollEvent(event)) {
+					if (event.type == sf::Event::Closed) {
+						window.close();
+					}
+					if (eventTimer.getElapsedTime().asMilliseconds() > 500) {
+						if (event.key.code == sf::Keyboard::Enter) {
+							menu = Menu::game;
+						}
+					}
+				}
+				window.clear(sf::Color::Black);
+				GF.showGF();
+				window.draw(text);
+				window.display();
+			}
+			eventTimer.restart();
 			/*
 				Easy - 9 * 9
 				Medium - 10 * 10
 				Hard - 11 * 11
 			*/
-			while(window.isOpen()){
+			while(window.isOpen() && !GF.getFinished()){
 				while (window.pollEvent(event)) {
 					if (event.type == sf::Event::Closed) {
 						window.close();
@@ -663,19 +731,90 @@ int main(){
 						menu = Menu::mainMenu;
 					}
 					if (event.key.code == sf::Keyboard::Up) {
-
-					}
-					if (event.key.code == sf::Keyboard::Down) {
-
+						GF.changeMovement(1);
 					}
 					if (event.key.code == sf::Keyboard::Right) {
-
+						GF.changeMovement(2);
+					}
+					if (event.key.code == sf::Keyboard::Down) {
+						GF.changeMovement(3);
 					}
 					if (event.key.code == sf::Keyboard::Left) {
-
+						GF.changeMovement(4);
 					}
 				}
+				if (eventTimer.getElapsedTime().asMilliseconds() * difficult > 500) {
+					GF.moveSnake();
+					eventTimer.restart();
+				}
+				window.clear();
 				GF.showGF();
+				window.display();
+			}
+#ifndef NDEBUG
+			std::ifstream fin("Debug\\content\\records.txt");
+#else
+			std::ifstream fin("content\\records.txt");
+#endif
+			std::vector<Records> vector;
+			std::string string;
+			fin >> string;
+			int counter = 0;
+			while (string != "0") {
+				vector.resize(counter + 1);
+				vector[counter].nickname = string;
+				fin >> string;
+				vector[counter].score = atoi(&string[0]);
+				counter++;
+				fin >> string;
+			}
+			vector.resize(counter + 1);
+			vector[counter].nickname = nickname;
+			vector[counter].score = GF.getSizeOfSnake();
+			counter++;
+			for (int i = 0; i < counter - 1; i++)
+				for (int j = 0; j < counter - i - 1; j++)
+					if (vector[j] < vector[j + 1]) {
+						Records buff = vector[j];
+						vector[j] = vector[j + 1];
+						vector[j + 1] = buff;
+					}
+#ifndef NDEBUG
+			std::ofstream fout("Debug\\content\\records.txt");
+#else
+			std::ofstream fout("content\\records.txt");
+#endif
+			if (vector.size() > 9) {
+				for (int i = 0; i < 9; i++) {
+					fout << vector[i].nickname << " " << vector[i].score << std::endl;
+				}
+			}else{
+				for (int i = 0; i < vector.size(); i++) {
+					fout << vector[i].nickname << " " << vector[i].score << std::endl;
+				}
+			}
+			
+			fout << "0";
+			text.setString("Your score is " + std::to_string(GF.getSizeOfSnake()) + "\nPress ENTER to continue");
+			text.setOrigin(text.getLocalBounds().left + text.getLocalBounds().width / 2, 0);
+			text.setPosition(texture_background.getSize().x * 0.5, texture_background.getSize().y * 0.5);
+			eventTimer.restart();
+			menu = Menu::postGame;
+			while (window.isOpen() && menu == Menu::postGame) {
+				while (window.pollEvent(event)) {
+					if (event.type == sf::Event::Closed) {
+						window.close();
+					}
+					if (eventTimer.getElapsedTime().asMilliseconds() > 500) {
+						if (event.key.code == sf::Keyboard::Enter) {
+							menu = Menu::mainMenu;
+						}
+					}
+				}
+				window.clear(sf::Color::Black);
+				GF.showGF();
+				window.draw(text);
+				window.display();
 			}
 		}
 	}
