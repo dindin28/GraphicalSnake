@@ -21,7 +21,10 @@ namespace snake {
 		SnakeNode* prev = NULL;
 	};
 	enum Tiles {
-		HEAD,
+		HEADMOVINGUP,
+		HEADMOVINGRIGHT,
+		HEADMOVINGDOWN,
+		HEADMOVINGLEFT,
 		BODY,
 		FOOD,
 		TILE1,
@@ -29,20 +32,29 @@ namespace snake {
 	};
 	sf::IntRect setTile(Tiles tile) {
 		switch (tile) {
-			case(SNAKE_HEAD): {
+			case(HEADMOVINGUP): {
 				return (sf::IntRect(0, 0, 20, 20));
 			}
-			case(SNAKE_BODY): {
+			case(HEADMOVINGRIGHT): {
 				return (sf::IntRect(20, 0, 20, 20));
 			}
-			case(FOOD): {
+			case(HEADMOVINGDOWN): {
 				return (sf::IntRect(40, 0, 20, 20));
 			}
-			case(TILE1): {
+			case(HEADMOVINGLEFT): {
 				return (sf::IntRect(60, 0, 20, 20));
 			}
-			case(TILE2): {
+			case(BODY): {
 				return (sf::IntRect(80, 0, 20, 20));
+			}
+			case(FOOD): {
+				return (sf::IntRect(100, 0, 20, 20));
+			}
+			case(TILE1): {
+				return (sf::IntRect(120, 0, 20, 20));
+			}
+			case(TILE2): {
+				return (sf::IntRect(140, 0, 20, 20));
 			}
 		}
 	}
@@ -50,62 +62,83 @@ namespace snake {
 		int x, y;
 	};
 
-	class GamingField {
+	struct Node {
+		int x, y;
+		Node* next = NULL;
+		Node* prev = NULL;
+	};
+
+
+	class Snake {
 	private:
+		//GF
 		int sizeGF;
 		int borderThickness = 5;
-		char* head;
+		char* headOfGF;
 		sf::RenderWindow *window;
 		sf::Vector2u sizeOfRender;
 		sf::Texture tileTexture;
 		sf::Sprite tileSprite;
 		sf::Vector2f tileSize;
+		//snake
+		Node* headOfSnake;
+		int sizeOfSnake;
+		/*
+	   * Up-arrow => return 1
+	   * Right-arrow => return 2
+	   * Down-arrow => return 3
+	   * Left-arrow => return 4
+	   * else return 0
+	   */
+		int movement = 1;
+		int prevMovement = 1;
 	public:
-		GamingField(sf::RenderWindow& window, int sizeGF, sf::Vector2u sizeOfRender) {
+		Snake(sf::RenderWindow& window, int sizeGF, sf::Vector2u sizeOfRender, int sizeOfSnake) {
+			//GF
 			this->sizeOfRender = sizeOfRender;
 			this->window = &window;
 			this->sizeGF = sizeGF;
-			head = new char[sizeGF * sizeGF];
+			headOfGF = new char[sizeGF * sizeGF];
 			clearGF();
 #ifndef NDEBUG
 			tileTexture.loadFromFile("Debug\\content\\tiles.png");
 #else
 			tileTexture.loadFromFile("content\\tiles.png");
 #endif
-			tileSize.x = static_cast<float>(sizeOfRender.x - 2 * borderThickness - sizeGF - 1) / sizeGF;
-			tileSize.y = static_cast<float>(sizeOfRender.y - 2 * borderThickness - sizeGF - 1) / sizeGF;
+			tileSize.x = static_cast<float>(sizeOfRender.x - 2 * borderThickness) / sizeGF;
+			tileSize.y = static_cast<float>(sizeOfRender.y - 2 * borderThickness) / sizeGF;
 			tileSprite.setTexture(tileTexture);
 			tileSprite.setScale(tileSize.x  / tileTexture.getSize().y, tileSize.y / tileTexture.getSize().y);
+			//Snake
+			//creating snake
+			this->sizeOfSnake = sizeOfSnake;
+			headOfSnake = new Node;
+			Node* temp;
+			for (int i = 0; i < sizeOfSnake - 1; i++) {
+				temp = new Node;
+				temp->next = headOfSnake;
+				headOfSnake->prev = temp;
+				headOfSnake = temp;
+			}
+			temp = headOfSnake;
+			for (int i = 0; i < sizeOfSnake; i++) {
+				temp->x = sizeGF / 2;
+				temp->y = sizeGF / 2 + i;
+				*(headOfGF + temp->y * sizeGF + temp->x) = 'o';
+				temp = temp->next;
+			}
+			*(headOfGF + headOfSnake->y * sizeGF + headOfSnake->x) = 'O';
+			//end of creating snake
+			spawnFood();
 		}
 		void showGF() {
-			window->clear(sf::Color::White);
-			sf::RectangleShape border(sf::Vector2f(borderThickness, sizeOfRender.y));
-			border.setFillColor(sf::Color::Black);
-			window->draw(border);
-			border.setPosition(sizeOfRender.x - borderThickness, 0);
-			window->draw(border);
-			border.setSize(sf::Vector2f(sizeOfRender.x, borderThickness));
-			border.setPosition(0, 0);
-			window->draw(border);
-			border.setPosition(0, sizeOfRender.y - borderThickness);
-			window->draw(border);
+			window->clear(sf::Color::Black);
 
-			border.setSize(sf::Vector2f(sizeOfRender.x, 1));
-			for (float position = borderThickness + tileSize.y; position <= borderThickness + (tileSize.y + 1) * (sizeGF - 1) - 1; position += tileSize.y + 1) {
-				border.setPosition(0, position);
-				window->draw(border);
-			}
-
-			border.setSize(sf::Vector2f(1, sizeOfRender.y));
-			for (float position = borderThickness + tileSize.x; position <= borderThickness + (tileSize.x + 1) * (sizeGF - 1) - 1; position += tileSize.x + 1) {
-				border.setPosition(position, 0);
-				window->draw(border);
-			}
 			int i = 0; //for even rows
-			for (float positionY = borderThickness; positionY < borderThickness + (tileSize.y + 1) * sizeGF - 1; positionY += tileSize.y + 1, i++) {
+			for (float positionY = borderThickness; positionY < borderThickness + tileSize.y * sizeGF - 1; positionY += tileSize.y, i++) {
 				if (i % 2 == 0) {
 					tileSprite.setTextureRect(setTile(TILE1));
-					for (float positionX = borderThickness; positionX < borderThickness + (tileSize.x + 1) * sizeGF - 1; positionX += tileSize.x + 1) {
+					for (float positionX = borderThickness; positionX < borderThickness + tileSize.x * sizeGF - 1; positionX += tileSize.x) {
 						if (tileSprite.getTextureRect() == setTile(TILE1)) {
 							tileSprite.setTextureRect(setTile(TILE2));
 						}
@@ -118,7 +151,7 @@ namespace snake {
 				}
 				else {
 					tileSprite.setTextureRect(setTile(TILE2));
-					for (float positionX = borderThickness; positionX < borderThickness + (tileSize.x + 1) * sizeGF - 1; positionX += tileSize.x + 1) {
+					for (float positionX = borderThickness; positionX < borderThickness + tileSize.x * sizeGF - 1; positionX += tileSize.x) {
 						if (tileSprite.getTextureRect() == setTile(TILE1)) {
 							tileSprite.setTextureRect(setTile(TILE2));
 						}
@@ -131,15 +164,120 @@ namespace snake {
 				}
 			}
 
-			/*tileSprite.setTextureRect(setTile(HEAD));
-			window->draw(tileSprite);*/
-
+			for (int i = 0; i < sizeGF; i++) {
+				for (int j = 0; j < sizeGF; j++) {
+					if (*(headOfGF + sizeGF * i + j) == 'X' || *(headOfGF + sizeGF * i + j) == 'O' || *(headOfGF + sizeGF * i + j) == 'o') {
+						if (*(headOfGF + sizeGF * i + j) == 'X') {
+							tileSprite.setTextureRect(setTile(FOOD));
+						}
+						else if (*(headOfGF + sizeGF * i + j) == 'O') {
+							if (prevMovement == 1) {
+								tileSprite.setTextureRect(setTile(HEADMOVINGUP));
+							}
+							else if(prevMovement == 2){
+								tileSprite.setTextureRect(setTile(HEADMOVINGRIGHT));
+							}
+							else if (prevMovement == 3) {
+								tileSprite.setTextureRect(setTile(HEADMOVINGDOWN));
+							}
+							else if (prevMovement == 4) {
+								tileSprite.setTextureRect(setTile(HEADMOVINGLEFT));
+							}
+						}
+						else if (*(headOfGF + sizeGF * i + j) == 'o') {
+							tileSprite.setTextureRect(setTile(BODY));
+						}
+						tileSprite.setPosition(borderThickness + tileSize.x * j, borderThickness + tileSize.y * i);
+						window->draw(tileSprite);
+					}
+				}
+			}
+			
 			window->display();
 		}
+
 		void clearGF() {
-			for (char* iter = head; iter != (head + sizeGF * sizeGF); iter++) {
+			for (char* iter = headOfGF; iter != (headOfGF + sizeGF * sizeGF); iter++) {
 				*(iter) = ' ';
 			}
+		}
+
+		void spawnFood() {
+			int counter = 0;
+			Point* ptr = new Point[sizeGF * sizeGF - sizeOfSnake];
+			for (int i = 0; i < sizeGF; i++) {
+				for (int j = 0; j < sizeGF; j++) {
+					if (*(headOfGF + i * sizeGF + j) != 'o' && *(headOfGF + i * sizeGF + j) != 'O') {
+						ptr[counter].x = j; ptr[counter].y = i;
+						counter++;
+					}
+				}
+			}
+			int randBuff = rand() % (sizeGF * sizeGF - sizeOfSnake);
+			*(headOfGF + ptr[randBuff].y * sizeGF + ptr[randBuff].x) = 'X';
+		}
+
+		void moveSnake() {
+			int x = headOfSnake->x, y = headOfSnake->y;
+			switch (movement) {
+			case(1): {
+				y--;
+				break;
+			}
+			case(2): {
+				x++;
+				break;
+			}
+			case(3): {
+				y++;
+				break;
+			}
+			case(4): {
+				x--;
+				break;
+			}
+			}
+			prevMovement = movement;
+			switch (checkBorders(x, y)) {
+				case(0): {
+					showGF();
+					system("pause");
+					exit(0);
+				}
+				case(1): {
+					*(headOfGF + headOfSnake->y * sizeGF + headOfSnake->x) = 'o';
+					Node* temp = headOfSnake;
+					while (temp->next)
+						temp = temp->next;
+					temp->prev->next = NULL;
+					*(headOfGF + temp->y * sizeGF + temp->x) = ' ';
+					temp->x = x; temp->y = y;
+					*(headOfGF + temp->y * sizeGF + temp->x) = 'O';
+					headOfSnake->prev = temp;
+					temp->next = headOfSnake; temp->prev = NULL;
+					headOfSnake = temp;
+				}
+				case(2): {
+					*(headOfGF + headOfSnake->y * sizeGF + headOfSnake->x) = 'o';
+					Node* temp = new Node;
+					temp->next = headOfSnake;
+					headOfSnake->prev = temp;
+					temp->x = x; temp->y = y;
+					*(headOfGF + temp->y * sizeGF + temp->x) = 'O';
+					spawnFood();
+					headOfSnake = temp;
+				}
+			}
+		}
+
+		int checkBorders(int x, int y) {
+			if (x >= sizeGF || x < 0 || y >= sizeGF || y < 0 || *(headOfGF + sizeGF * y + x) == 'o') {
+				return 0;
+			}
+			else if (*(headOfGF + sizeGF * y + x) == 'X') {
+				return 2;
+			}
+			else return 1;
 		}
 	};
 }
@@ -510,20 +648,31 @@ int main(){
 			}
 		}
 		else if (menu == Menu::game && window.isOpen()) {
-			snake::GamingField GF(window, difficult + 8, texture_background.getSize());
+			snake::Snake GF(window, difficult + 8, texture_background.getSize(), difficult + 2);
 			/*
 				Easy - 9 * 9
 				Medium - 10 * 10
 				Hard - 11 * 11
 			*/
-			//headOfSnake
-			//GF.clearGF();
-			//GF.spawnFood();
-			int movement = 1;
 			while(window.isOpen()){
 				while (window.pollEvent(event)) {
 					if (event.type == sf::Event::Closed) {
 						window.close();
+					}
+					if (event.key.code == sf::Keyboard::Escape) {
+						menu = Menu::mainMenu;
+					}
+					if (event.key.code == sf::Keyboard::Up) {
+
+					}
+					if (event.key.code == sf::Keyboard::Down) {
+
+					}
+					if (event.key.code == sf::Keyboard::Right) {
+
+					}
+					if (event.key.code == sf::Keyboard::Left) {
+
 					}
 				}
 				GF.showGF();
