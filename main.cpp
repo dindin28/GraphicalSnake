@@ -94,7 +94,7 @@ namespace snake {
 	class Snake {
 	private:
 		//GF
-		int sizeGF;
+		int sizeGF = 9;
 		int borderThickness = 5;
 		char* headOfGF;
 		sf::RenderWindow *window;
@@ -105,7 +105,7 @@ namespace snake {
 		bool finished = false;
 		//snake
 		Node* headOfSnake;
-		int sizeOfSnake;
+		int sizeOfSnake = 3;
 		//movement
 		/*
 	   * Up-arrow => return 1
@@ -117,11 +117,10 @@ namespace snake {
 		int movement = 1;
 		int prevMovement = 1;
 	public:
-		Snake(sf::RenderWindow& window, int sizeGF, sf::Vector2u sizeOfRender, int sizeOfSnake) {
+		Snake(sf::RenderWindow& window, sf::Vector2u sizeOfRender) {
 			//GF
 			this->sizeOfRender = sizeOfRender;
 			this->window = &window;
-			this->sizeGF = sizeGF;
 			headOfGF = new char[sizeGF * sizeGF];
 			clearGF();
 #ifndef NDEBUG
@@ -135,7 +134,6 @@ namespace snake {
 			tileSprite.setScale(tileSize.x  / tileTexture.getSize().y, tileSize.y / tileTexture.getSize().y);
 			//Snake
 			//creating snake
-			this->sizeOfSnake = sizeOfSnake;
 			headOfSnake = new Node;
 			Node* temp;
 			for (int i = 0; i < sizeOfSnake - 1; i++) {
@@ -234,7 +232,6 @@ namespace snake {
 				}
 			}
 			int randBuff = rand() % (sizeGF * sizeGF - getSizeOfSnake());
-			//error
 			*(headOfGF + ptr[randBuff].y * sizeGF + ptr[randBuff].x) = 'X';
 		}
 
@@ -694,7 +691,7 @@ int main(){
 		}
 		else 
 		if (menu == Menu::game && window.isOpen()) {
-			snake::Snake GF(window, difficult + 8, texture_background.getSize(), difficult + 2);
+			snake::Snake GF(window, texture_background.getSize());
 			text.setString("To move snake use arrows\nPress ENTER to countinue");
 			text.setOrigin(text.getLocalBounds().left + text.getLocalBounds().width / 2, 0);
 			text.setPosition(texture_background.getSize().x * 0.5, texture_background.getSize().y * 0.5);
@@ -770,7 +767,7 @@ int main(){
 			}
 			vector.resize(counter + 1);
 			vector[counter].nickname = nickname;
-			vector[counter].score = GF.getSizeOfSnake();
+			vector[counter].score = GF.getSizeOfSnake() * difficult;
 			counter++;
 			for (int i = 0; i < counter - 1; i++)
 				for (int j = 0; j < counter - i - 1; j++)
@@ -795,7 +792,7 @@ int main(){
 			}
 			
 			fout << "0";
-			text.setString("Your score is " + std::to_string(GF.getSizeOfSnake()) + "\nPress ENTER to continue");
+			text.setString("Your score is " + std::to_string(GF.getSizeOfSnake() * difficult) + "\nPress ENTER to continue");
 			text.setOrigin(text.getLocalBounds().left + text.getLocalBounds().width / 2, 0);
 			text.setPosition(texture_background.getSize().x * 0.5, texture_background.getSize().y * 0.5);
 			eventTimer.restart();

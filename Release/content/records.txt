@@ -1,10 +1,10 @@
-nastya 15
-default 11
-default 4
-default 3
-default 3
-default 3
-default 3
-default 3
-default 3
+default 42
+default 39
+jffjfjjffj 32
+default 30
+rrjhrff 28
+rrjhrff 26
+rrjhrff 22
+rrjhrff 22
+rrjhrff 21
 0
