@@ -1,8 +1,8 @@
+default 45
+default 27
 default 11
 default 4
-default 3
-default 3
-default 3
+default 4
 default 3
 default 3
 default 3

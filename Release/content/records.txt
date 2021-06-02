@@ -1,10 +1,10 @@
-default 42
-default 39
-jffjfjjffj 32
-default 30
-rrjhrff 28
-rrjhrff 26
-rrjhrff 22
-rrjhrff 22
-rrjhrff 21
+volodya 99
+dima 90
+dindin 87
+Nastia 81
+Vlada 78
+Oleg 78
+Misha 75
+Yakov 60
+Valentina 56
 0
